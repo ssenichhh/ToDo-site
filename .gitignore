@@ -41,3 +41,4 @@ media
 
 # IntelliJ
 .DS_Store
+db.sqlite3
