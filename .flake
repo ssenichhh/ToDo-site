@@ -1,0 +1,4 @@
+# .flake8
+[flake8]
+exclude = django-env,*.pyc,*.pyo,.git,__pycache__,migrations
+max-line-length = 110
