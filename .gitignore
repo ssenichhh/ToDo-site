@@ -105,7 +105,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+django-env/
 # mkdocs documentation
 /site
 
@@ -136,8 +136,10 @@ GitHub.sublime-settings
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
-django-env/
-.DS_Store
 uploads/
 media/
-db.sqlite3
+
+# Ignore Mac system files
+.DS_Store
+
+
