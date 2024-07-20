@@ -30,8 +30,7 @@ jobs:
         pip install -r requirements.txt
         pip install coverage pytest-django
 
-    - name: Run migrations
-      run: python manage.py migrate
+    - name: Set up the database
       env:
         DJANGO_SETTINGS_MODULE: todowo.settings
         DB_USER: postgres
@@ -39,6 +38,8 @@ jobs:
         DB_NAME: github_actions
         DB_HOST: localhost
         DB_PORT: 5432
+      run: |
+        python manage.py migrate
 
     - name: Run tests with coverage
       run: |
