@@ -44,4 +44,3 @@ urlpatterns = [
     # API routes
     path('todo/api/', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

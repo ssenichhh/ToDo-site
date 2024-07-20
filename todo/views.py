@@ -43,22 +43,25 @@ class TodoViewSet(
         else:
             if request.POST['password1'] == request.POST['password2']:
                 try:
-                    user = User.objects.create_user(request.POST['username'],
-                                                    password=request.POST['password1'])
+                    user = User.objects.create_user(
+                        request.POST['username'],
+                        password=request.POST['password1'])
                     user.save()
                     login(request, user)
                     return redirect('currenttodos')
                 except IntegrityError:
                     return render(request, 'todo/signupuser.html',
                                   {'form': UserCreationForm(),
-                                   'error': 'That username has already been taken.'
-                                            'Please choose a new username'})
+                                   'error':
+                                       'That username has already been taken.'
+                                       'Please choose a new username'})
             else:
                 return render(request, 'todo/signupuser.html',
                               {'form': UserCreationForm(),
                                'error': 'Passwords did not match'})
 
-    @action(detail=False, methods=['get', 'post'], permission_classes=[AllowAny])
+    @action(detail=False, methods=['get', 'post'],
+            permission_classes=[AllowAny])
     def login_user(self, request):
         if request.method == 'GET':
             return render(request,
@@ -76,7 +79,8 @@ class TodoViewSet(
                 login(request, user)
                 return redirect('currenttodos')
 
-    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=['post'],
+            permission_classes=[IsAuthenticated])
     def logout_user(self, request):
         if request.method == 'POST':
             logout(request)
@@ -102,15 +106,18 @@ class TodoViewSet(
 
     @action(detail=False)
     def current_todos(self, request):
-        todos = Todo.objects.filter(user=request.user, date_completed__isnull=True)
+        todos = Todo.objects.filter(user=request.user,
+                                    date_completed__isnull=True)
         return render(request, 'todo/currenttodos.html',
                       {'todos': todos})
 
     @action(detail=False)
     def completed_todos(self, request):
         todos = Todo.objects.filter(user=request.user,
-                                    date_completed__isnull=False).order_by('-date_completed')
-        return render(request, 'todo/completedtodos.html',
+                                    date_completed__isnull=False).order_by(
+            '-date_completed')
+        return render(request,
+                      'todo/completedtodos.html',
                       {'todos': todos})
 
     @action(detail=True, methods=['get', 'post'])
@@ -127,7 +134,9 @@ class TodoViewSet(
                 return redirect('currenttodos')
             except ValueError:
                 return render(request, 'todo/viewtodo.html',
-                              {'todo': todo, 'form': form, 'error': 'Bad info'})
+                              {'todo': todo,
+                               'form': form,
+                               'error': 'Bad info'})
 
     @action(detail=True, methods=['post'])
     def complete_todo(self, request, pk=None):
