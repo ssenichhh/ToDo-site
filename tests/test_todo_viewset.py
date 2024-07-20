@@ -49,7 +49,7 @@ def test_signup_user(api_client):
 
 @pytest.mark.django_db
 def test_login_user(api_client, create_user):
-    user = create_user(username='testuser', password='testpassword')
+    create_user(username='testuser', password='testpassword')
     response = api_client.post(reverse('loginuser'), {
         'username': 'testuser',
         'password': 'testpassword'
@@ -59,22 +59,24 @@ def test_login_user(api_client, create_user):
 
 @pytest.mark.django_db
 def test_logout_user(api_client, authenticate):
-    user = authenticate()
+    authenticate()
     response = api_client.post(reverse('logoutuser'))
     assert response.status_code == 302
 
 
 @pytest.mark.django_db
 def test_create_todo_get(api_client, authenticate):
-    user = authenticate()
+    authenticate()
     response = api_client.get(reverse('createtodo'))
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
 def test_create_todo_post(api_client, authenticate):
-    user = authenticate()
-    response = api_client.post(reverse('createtodo'), {'title': 'Test Todo', 'memo': 'Test Memo'})
+    authenticate()
+    response = api_client.post(reverse('createtodo'), {
+        'title': 'Test Todo', 'memo': 'Test Memo'
+    })
     assert response.status_code == 302
     assert Todo.objects.count() == 1
 
@@ -91,7 +93,9 @@ def test_current_todos(api_client, authenticate):
 @pytest.mark.django_db
 def test_completed_todos(api_client, authenticate):
     user = authenticate()
-    todo = Todo.objects.create(title='Test Todo', user=user, date_completed=timezone.now())
+    Todo.objects.create(
+        title='Test Todo', user=user, date_completed=timezone.now()
+    )
     response = api_client.get(reverse('completedtodos'))
     assert response.status_code == 200
     assert 'Test Todo' in response.content.decode()
@@ -109,7 +113,9 @@ def test_view_todo_get(api_client, authenticate):
 def test_view_todo_post(api_client, authenticate):
     user = authenticate()
     todo = Todo.objects.create(title='Test Todo', user=user)
-    response = api_client.post(reverse('viewtodo', args=[todo.pk]), {'title': 'Updated Title'})
+    response = api_client.post(reverse('viewtodo', args=[todo.pk]), {
+        'title': 'Updated Title'
+    })
     assert response.status_code == 302
     todo.refresh_from_db()
     assert todo.title == 'Updated Title'
