@@ -1,4 +1,4 @@
-#!/Users/arsenii/Desktop/todowo-project/django-env/bin/python3.12
+#!/Users/arsenii/Desktop/todowo-project/django-env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

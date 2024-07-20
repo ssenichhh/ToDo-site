@@ -3,6 +3,7 @@ from .models import Todo
 
 
 class Admin(admin.ModelAdmin):
-    readonly_fields = ('created', )
+    readonly_fields = ('created',)
+
 
 admin.site.register(Todo, Admin)
