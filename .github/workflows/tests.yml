@@ -33,7 +33,7 @@ jobs:
     - name: Run migrations
       run: python manage.py migrate
       env:
-        DJANGO_SETTINGS_MODULE: myblog.settings
+        DJANGO_SETTINGS_MODULE: todowo.settings
         DB_USER: postgres
         DB_PASSWORD: postgres
         DB_NAME: github_actions
@@ -42,10 +42,10 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        coverage run --source=myblog/ -m pytest
+        coverage run --source=todowo/ -m pytest
         coverage report
       env:
-        DJANGO_SETTINGS_MODULE: myblog.settings
+        DJANGO_SETTINGS_MODULE: todowo.settings
         DB_USER: postgres
         DB_PASSWORD: postgres
         DB_NAME: github_actions
