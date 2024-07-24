@@ -23,6 +23,12 @@ class TodoViewSet(
     serializer_class = TodoSerializer
     queryset = Todo.objects.all()
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
     def get_permissions(self):
         if self.action in ['home', 'signup_user', 'login_user']:
             permission_classes = [AllowAny]
@@ -152,3 +158,4 @@ class TodoViewSet(
         if request.method == 'POST':
             todo.delete()
             return redirect('currenttodos')
+

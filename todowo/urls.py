@@ -16,13 +16,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
 from todo.views import TodoViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 
-router = DefaultRouter()
-router.register(r'todos', TodoViewSet, basename='todos')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,5 +39,6 @@ urlpatterns = [
     path('todo/<int:pk>/delete/', TodoViewSet.as_view({'post': 'delete_todo'}), name='deletetodo'),
 
     # API routes
-    path('todo/api/', include(router.urls)),
+    path('api/', include('api.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
