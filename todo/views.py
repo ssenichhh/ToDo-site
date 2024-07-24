@@ -158,4 +158,3 @@ class TodoViewSet(
         if request.method == 'POST':
             todo.delete()
             return redirect('currenttodos')
-
